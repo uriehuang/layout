@@ -1,0 +1,39 @@
+server:
+  http:
+    addr: 0.0.0.0:8000
+    timeout: 1s
+  grpc:
+    addr: 0.0.0.0:9000
+    timeout: 1s
+data:
+  redis:
+    network: tcp
+    addr: 127.0.0.1:6379
+    read_timeout: 0.2s
+    write_timeout: 0.2s
+    username: ""
+    password: ""
+  database:
+    xianshi:
+      max_idle_conns: 1
+      max_open_conns: 100
+      conn_max_lifetime: 30s
+      conn_max_idle_time: 30s
+      master: root:123456@tcp(127.0.0.1:3306)/xianshi
+      slaves:
+        - root:123456@tcp(127.0.0.1:3306)/xianshi
+    config:
+      max_idle_conns: 1
+      max_open_conns: 100
+      conn_max_lifetime: 30s
+      conn_max_idle_time: 30s
+      master: root:123456@tcp(localhost:3306)/config
+      slaves:
+        - root:123456@tcp(127.0.0.1:3306)/config
+log:
+  level: DEBUG
+otel:
+  service_name: ""
+  sample_rate: 1.0
+  endpoint: "" # tracing-analysis-dc-sg-internal.aliyuncs.com
+  path: "" # adapt_1iu42593ahf@xxxxxxxx1/api/otlp/traces
