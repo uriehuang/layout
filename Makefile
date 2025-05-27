@@ -79,3 +79,12 @@ help:
 	{ lastLine = $$0 }' $(MAKEFILE_LIST)
 
 .DEFAULT_GOAL := help
+
+# build docker image
+docker-build:
+	docker buildx build --platform linux/amd64,linux/arm64 --build-arg GITHUB_USER=$(GITHUB_USER) --build-arg GITHUB_TOKEN=$(GITHUB_TOKEN) --build-arg CONFIG_FILE_NAME=$(CONFIG_FILE_NAME) -t crpi-e21ypmelt7lqlknt.cn-shenzhen.personal.cr.aliyuncs.com/default_test0526/user:$(VERSION) .
+
+.PHONY: docker-push
+# push docker image
+docker-push:
+	docker push crpi-e21ypmelt7lqlknt.cn-shenzhen.personal.cr.aliyuncs.com/default_test0526/user:$(VERSION)

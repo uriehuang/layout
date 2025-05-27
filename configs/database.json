@@ -1,0 +1,10 @@
+{
+    "master_endpoint": "rds-mysql-test.rwlb.rds.aliyuncs.com:3306",
+    "slave_endpoint_list": ["rds-mysql-test.ro.rds.aliyuncs.com:3306"],
+    "user": "normal",
+    "password": "Hello_2025",
+    "max_idle_conns": 1,
+    "max_open_conns": 100,
+    "conn_max_lifetime": "30s",
+    "conn_max_idle_time": "30s"
+}

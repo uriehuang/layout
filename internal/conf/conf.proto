@@ -51,8 +51,7 @@ message Database {
     repeated string slaves = 6; // 从库 dsn
   }
 
-  Mysql xianshi = 1; // xianshi 库
-  Mysql config = 2; // config 库
+  Mysql xs = 1; // xs 库
 }
 
 message Log {
