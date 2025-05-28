@@ -14,6 +14,7 @@ import (
 	"github.com/go-kratos/kratos/v2/registry"
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 	"github.com/go-kratos/kratos/v2/transport/http"
+	"github.com/rs/xid"
 
 	_ "go.uber.org/automaxprocs"
 )
@@ -27,9 +28,7 @@ var (
 	// flagconf is the config flag.
 	flagconf string
 
-	id, _ = os.Hostname()
-
-	currentNamespace = "default"
+	id = xid.New().String()
 )
 
 func init() {
