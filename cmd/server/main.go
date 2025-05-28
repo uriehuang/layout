@@ -3,11 +3,9 @@ package main
 import (
 	"flag"
 	"os"
-	"path/filepath"
 
 	"layout/internal/conf"
 
-	k8sRegistry "github.com/go-kratos/kratos/contrib/registry/kubernetes/v2"
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/config"
 	"github.com/go-kratos/kratos/v2/config/file"
@@ -16,10 +14,6 @@ import (
 	"github.com/go-kratos/kratos/v2/registry"
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 	"github.com/go-kratos/kratos/v2/transport/http"
-	"k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/rest"
-	"k8s.io/client-go/tools/clientcmd"
-	"k8s.io/client-go/util/homedir"
 
 	_ "go.uber.org/automaxprocs"
 )
@@ -57,24 +51,6 @@ func newApp(logger log.Logger, gs *grpc.Server, hs *http.Server, r registry.Regi
 	)
 }
 
-func getClientSet() (*kubernetes.Clientset, error) {
-	restConfig, err := rest.InClusterConfig()
-	home := homedir.HomeDir()
-
-	if err != nil {
-		kubeconfig := filepath.Join(home, ".kube", "config")
-		restConfig, err = clientcmd.BuildConfigFromFlags("", kubeconfig)
-		if err != nil {
-			return nil, err
-		}
-	}
-	clientSet, err := kubernetes.NewForConfig(restConfig)
-	if err != nil {
-		return nil, err
-	}
-	return clientSet, nil
-}
-
 func main() {
 	flag.Parse()
 	c := config.New(
@@ -104,14 +80,7 @@ func main() {
 	logger = log.NewFilter(logger, log.FilterLevel(log.ParseLevel(bc.GetLog().GetLevel())))
 	log.SetLogger(logger)
 
-	clientSet, err := getClientSet()
-	if err != nil {
-		panic(err)
-	}
-
-	reg := k8sRegistry.NewRegistry(clientSet, currentNamespace)
-
-	app, cleanup, err := wireApp(bc.Server, bc.Data, logger, reg)
+	app, cleanup, err := wireApp(bc.GetServer(), bc.GetData(), bc.GetRegistry(), logger)
 	if err != nil {
 		panic(err)
 	}

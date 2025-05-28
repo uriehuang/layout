@@ -37,3 +37,8 @@ otel:
   sample_rate: 1.0
   endpoint: "" # tracing-analysis-dc-sg-internal.aliyuncs.com
   path: "" # adapt_1iu42593ahf@xxxxxxxx1/api/otlp/traces
+registry:
+  nacos:
+    namespace_id: "da0736ad-9c68-43a8-b904-cfcbbc061060"
+    addr: "mse-ea6c28c6-nacos-ans.mse.aliyuncs.com"
+    port: 8848
