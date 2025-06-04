@@ -9,7 +9,6 @@ import (
 	"layout/internal/biz"
 	"layout/internal/conf"
 	"layout/internal/data"
-	"layout/internal/pkg/registry"
 	"layout/internal/server"
 	"layout/internal/service"
 
@@ -19,13 +18,12 @@ import (
 )
 
 // wireApp init kratos application.
-func wireApp(*conf.Server, *conf.Data, *conf.Registry, log.Logger) (*kratos.App, func(), error) {
+func wireApp(*conf.Server, *conf.Data, log.Logger) (*kratos.App, func(), error) {
 	panic(wire.Build(
 		newApp,
 		server.ProviderSet,
 		data.ProviderSet,
 		biz.ProviderSet,
 		service.ProviderSet,
-		registry.ProviderSet,
 	))
 }

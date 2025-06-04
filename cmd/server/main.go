@@ -11,10 +11,11 @@ import (
 	"github.com/go-kratos/kratos/v2/config/file"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/middleware/tracing"
-	"github.com/go-kratos/kratos/v2/registry"
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 	"github.com/go-kratos/kratos/v2/transport/http"
 	"github.com/rs/xid"
+	"github.com/uriehuang/pkg/metrics"
+	pkgTracing "github.com/uriehuang/pkg/tracing"
 
 	_ "go.uber.org/automaxprocs"
 )
@@ -35,7 +36,7 @@ func init() {
 	flag.StringVar(&flagconf, "conf", "../../configs", "config path, eg: -conf config.yaml")
 }
 
-func newApp(logger log.Logger, gs *grpc.Server, hs *http.Server, r registry.Registrar) *kratos.App {
+func newApp(logger log.Logger, gs *grpc.Server, hs *http.Server) *kratos.App {
 	return kratos.New(
 		kratos.ID(id),
 		kratos.Name(Name),
@@ -46,7 +47,6 @@ func newApp(logger log.Logger, gs *grpc.Server, hs *http.Server, r registry.Regi
 			gs,
 			hs,
 		),
-		kratos.Registrar(r),
 	)
 }
 
@@ -67,6 +67,18 @@ func main() {
 	if err := c.Scan(&bc); err != nil {
 		panic(err)
 	}
+
+	// init tracing
+	pkgTracing.InitTracer(&pkgTracing.TracingConfig{
+		ServiceName: Name,
+		Endpoint:    bc.GetOtel().GetEndpoint(),
+		Rate:        bc.GetOtel().GetSampleRate(),
+		Path:        bc.GetOtel().GetPath(),
+	})
+
+	// init metrics
+	metrics.InitMetrics(Name)
+
 	logger := log.With(log.NewStdLogger(os.Stdout),
 		"ts", log.DefaultTimestamp,
 		"caller", log.DefaultCaller,
@@ -79,7 +91,7 @@ func main() {
 	logger = log.NewFilter(logger, log.FilterLevel(log.ParseLevel(bc.GetLog().GetLevel())))
 	log.SetLogger(logger)
 
-	app, cleanup, err := wireApp(bc.GetServer(), bc.GetData(), bc.GetRegistry(), logger)
+	app, cleanup, err := wireApp(bc.GetServer(), bc.GetData(), logger)
 	if err != nil {
 		panic(err)
 	}
