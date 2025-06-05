@@ -4,11 +4,14 @@ go 1.24.1
 
 require (
 	github.com/go-kratos/kratos/v2 v2.8.4
+	github.com/go-redis/redis/extra/redisotel v0.3.0
+	github.com/go-redis/redis/v8 v8.11.5
 	github.com/google/wire v0.6.0
 	github.com/rs/xid v1.6.0
 	github.com/uriehuang/protocol v0.0.0-20250603081345-386ed118177b
 	go.uber.org/automaxprocs v1.5.1
 	google.golang.org/protobuf v1.36.6
+	gorm.io/gorm v1.26.1
 )
 
 require (
@@ -17,7 +20,7 @@ require (
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
-	github.com/go-redis/redis/v8 v8.11.5 // indirect
+	github.com/go-redis/redis/extra/rediscmd v0.2.0 // indirect
 	github.com/go-resty/resty/v2 v2.16.5 // indirect
 	github.com/go-sql-driver/mysql v1.9.2 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.26.1 // indirect
@@ -33,7 +36,8 @@ require (
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp v1.35.0 // indirect
 	go.opentelemetry.io/otel/exporters/prometheus v0.57.0 // indirect
 	go.opentelemetry.io/proto/otlp v1.5.0 // indirect
-	gorm.io/gorm v1.26.1 // indirect
+	gorm.io/driver/mysql v1.5.7 // indirect
+	gorm.io/plugin/dbresolver v1.6.0 // indirect
 )
 
 require (

@@ -9,28 +9,20 @@ server:
 data:
   redis:
     network: tcp
-    addr: 127.0.0.1:6379
+    addr: redis-svc-6p5kp:6379
     read_timeout: 0.2s
     write_timeout: 0.2s
     username: ""
-    password: ""
+    password: "test"
   database:
-    xianshi:
+    xs:
       max_idle_conns: 1
       max_open_conns: 100
       conn_max_lifetime: 30s
       conn_max_idle_time: 30s
-      master: root:123456@tcp(127.0.0.1:3306)/xianshi
+      master: normal:HelloGogo123456@tcp(rds-mysql-test.rwlb.rds.aliyuncs.com:3306)/xs
       slaves:
-        - root:123456@tcp(127.0.0.1:3306)/xianshi
-    config:
-      max_idle_conns: 1
-      max_open_conns: 100
-      conn_max_lifetime: 30s
-      conn_max_idle_time: 30s
-      master: root:123456@tcp(localhost:3306)/config
-      slaves:
-        - root:123456@tcp(127.0.0.1:3306)/config
+        - normal:HelloGogo123456@tcp(rds-mysql-test.rwlb.rds.aliyuncs.com:3306)/xs
 log:
   level: DEBUG
 otel:
