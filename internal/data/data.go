@@ -24,9 +24,6 @@ type Data struct {
 
 // NewData .
 func NewData(c *conf.Data, logger log.Logger) (*Data, func(), error) {
-	cleanup := func() {
-		log.NewHelper(logger).Info("closing the data resources")
-	}
 	xsDB, err := database.NewMysqlDB(&database.MysqlConf{
 		MasterDsn:       c.GetDatabase().GetXs().GetMaster(),
 		SlaveDsn:        c.GetDatabase().GetXs().GetSlaves(),
@@ -48,6 +45,12 @@ func NewData(c *conf.Data, logger log.Logger) (*Data, func(), error) {
 	})
 	rds.AddHook(redisotel.TracingHook{})          // 链路追踪
 	rds.AddHook(metrics.NewMetricsHook("layout")) // metrics
+
+	cleanup := func() {
+		log.NewHelper(logger).Info("closing the data resources")
+		_ = database.Close(xsDB)
+		_ = rds.Close()
+	}
 
 	return &Data{
 		XsDB: xsDB,

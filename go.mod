@@ -11,6 +11,8 @@ require (
 	github.com/uriehuang/protocol v0.0.0-20250603081345-386ed118177b
 	go.uber.org/automaxprocs v1.5.1
 	google.golang.org/protobuf v1.36.6
+	gorm.io/driver/mysql v1.5.7
+	gorm.io/gen v0.3.27
 	gorm.io/gorm v1.26.1
 )
 
@@ -36,7 +38,10 @@ require (
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp v1.35.0 // indirect
 	go.opentelemetry.io/otel/exporters/prometheus v0.57.0 // indirect
 	go.opentelemetry.io/proto/otlp v1.5.0 // indirect
-	gorm.io/driver/mysql v1.5.7 // indirect
+	golang.org/x/mod v0.17.0 // indirect
+	golang.org/x/tools v0.21.1-0.20240508182429-e35e4ccd0d2d // indirect
+	gorm.io/datatypes v1.2.4 // indirect
+	gorm.io/hints v1.1.0 // indirect
 	gorm.io/plugin/dbresolver v1.6.0 // indirect
 )
 
@@ -49,7 +54,7 @@ require (
 	github.com/go-playground/form/v4 v4.2.1 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/gorilla/mux v1.8.1 // indirect
-	github.com/uriehuang/pkg v0.0.0-20250604062916-dd8985a5fa18
+	github.com/uriehuang/pkg v0.0.0-20250606061747-0c022aa90958
 	go.opentelemetry.io/auto/sdk v1.1.0 // indirect
 	go.opentelemetry.io/otel v1.35.0 // indirect
 	go.opentelemetry.io/otel/metric v1.35.0 // indirect
